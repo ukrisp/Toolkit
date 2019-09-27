@@ -1,2 +1,1 @@
-cat input.jason | jq -r '.| (keys[] as $k | "\($k)" ,["#",.[]?[].field,"#",.[]?[].description,"#", .[]?[].type,"#",.[]?[].operators])|@text'|tr -d '["]\n'|awk 'BEGIN{FS=OFS="#"} function GSUB(F) {gsub(/\,/,"",$F)} { arr[$0]++ } END { for( no in arr) { GSUB(arr[no]) ; print no }}'
-
+jq -r '.| (keys[] as $k | "\($k)" ,["#",.[]?[].field,"#",.[]?[].description,"#", .[]?[].type,"#",.[]?[].operators])|@text'|tr -d '["]\n'|awk 'BEGIN{FS=OFS="#"}function GSUB(F) {gsub(/^\,/,"",$F)} {GSUB(1);GSUB(2);GSUB(3);GSUB(4);GSUB(5);print $1,$2,$3,$4,$5}'
